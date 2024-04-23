@@ -13,6 +13,13 @@ function App() {
 
   const fetchMovieData = (id) => {
     const apiKey = import.meta.env.VITE_APP_API_KEY;
+    let url = ``;
+    if (['now_playing', 'popular', 'top_rated'].includes(id)){
+      url = `https://api.themoviedb.org/3/movie/${id}?language=ko`
+    } else {
+      url = `https://api.themoviedb.org/3/search/movie?query=${id}&language=ko`
+    }
+
     const options = {
       method: 'GET',
       headers: {
@@ -21,7 +28,7 @@ function App() {
       }
     };
     
-    fetch(`https://api.themoviedb.org/3/movie/${id}?language=ko`, options)
+    fetch(url, options)
       .then(response => response.json())
       .then(response => {
         console.log(response.results);
